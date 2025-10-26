@@ -2,19 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Leaflet Cluster App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <title>Crime Mapper - Chicago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <nav class="topbar">
-    <div class="brand">Interactive Map with Clustering</div>
+
+  <!-- navigation bar -->
+  <div class="navbar">
+    <div class="logo">
+      Crime <br> Mapper
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='data.html'">Data</button>
+    </div>
+
+    <div class="search-box">
+      <button>🔍</button>
+      <input type="text" placeholder="Enter coordinates" />
+    </div>
+  </div>
+
+  <!-- map section -->
+  <div class="map-section">
+
+    <!-- controls -->
     <div class="controls">
       <label>Category:
         <select id="category">
@@ -26,16 +45,23 @@
           <option>Other</option>
         </select>
       </label>
+
       <label>From: <input type="date" id="dateFrom" /></label>
       <label>To: <input type="date" id="dateTo" /></label>
+
       <button id="apply">Apply</button>
       <button id="reset">Reset</button>
     </div>
-  </nav>
-  <div id="map"></div>
 
+    <!-- map -->
+    <div id="map"></div>
+  </div>
+
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- function logic -->
   <script src="./app.js"></script>
 </body>
 </html>
