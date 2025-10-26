@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Crime Map - Data Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Crime <br> Mapper</div>
+        <div class="nav-buttons">
+            <button onclick="location.href='index.html'">Home</button>
+            <button onclick="location.href='data(static).html'">Data</button>
+        </div>
+        <div class="search-box">
+            <button>🔍</button>
+            <input type="text" placeholder="Enter coordinates" />
+        </div>
+    </div>
+    <div class="chart-section" style="border:none; box-shadow:none;">
+        <h2 style="text-align:center">Data Page</h2>
+        <p style="text-align:center">This page contains static data visualizations.</p>
+        <div class="below-map" style="width: 100%; font-size: 18px; line-height: 1.6;">
+            <h2 style="text-align:center">About this data</h2>
+            <div
+                style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; margin-bottom: 20px; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto;">
+                <div style="flex:1; text-align:center;">
+                    <h2 style="text-align:center">Crime Type Distribution (Top 10)</h2>
+                    <canvas id="crimeTypeChart" width="800" height="800"
+                        style="display:block; margin: 0 auto;"></canvas>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <h2 style="text-align:center">Crime Description Distribution (Top 10)</h2>
+                    <canvas id="crimeDescPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+                </div>
+            </div>
+            <div>
+                <h2 style="text-align:center">Monthly Crime Count</h2>
+                <canvas id="crimeMonthChart" width="600" height="350"></canvas>
+            </div>
+            <div>
+                <h2 style="text-align:center">Crime Count by Day of Week</h2>
+                <canvas id="crimeWeekdayChart" width="600" height="350"></canvas>
+            </div>
+            <div style="width: 100%; max-width: 1300px; margin: 40px auto 0;">
+                <h2 style="text-align:center; margin-bottom: 10px;">Location Description Distribution (Top 10)</h2>
+                <canvas id="locationDescPie" width="1200" height="1200" style="display:block; margin: 0 auto;"></canvas>
+            </div>
+            <div
+                style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; margin-bottom: 20px; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto;">
+                <div style="flex:1; text-align:center;">
+                    <h2 style="text-align:center">Arrest Distribution</h2>
+                    <canvas id="arrestPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+                </div>
+                <div style="flex:1; text-align:center;">
+                    <h2 style="text-align:center">Domestic Violence Distribution</h2>
+                    <canvas id="domesticPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Crime Type Distribution (Top 10)
+        new Chart(document.getElementById('crimeTypeChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['THEFT', 'BATTERY', 'CRIMINAL DAMAGE', 'ASSAULT', 'DECEPTIVE PRACTICE', 'BURGLARY', 'MOTOR VEHICLE THEFT', 'ROBBERY', 'NARCOTICS', 'CRIMINAL TRESPASS', 'Other'],
+                datasets: [{
+                    label: 'Crime Count',
+                    data: [1200, 950, 800, 700, 650, 600, 550, 500, 450, 400, 300],
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                        '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Crime Type Distribution (Top 10)' }
+                }
+            }
+        });
+        // Crime Description Distribution (Top 10)
+        new Chart(document.getElementById('crimeDescPie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['OVER $500', 'SIMPLE', 'TO VEHICLE', 'DOMESTIC BATTERY SIMPLE', 'TO PROPERTY', 'RETAIL THEFT', 'AGGRAVATED', 'POSSESSION', 'TO STATE SUP PROP', 'TO LAND', 'Other'],
+                datasets: [{
+                    label: 'Crime Count',
+                    data: [900, 850, 800, 750, 700, 650, 600, 550, 500, 450, 400],
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                        '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Crime Description Distribution (Top 10)' }
+                }
+            }
+        });
+        // Monthly Crime Count
+        new Chart(document.getElementById('crimeMonthChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06', '2025-07', '2025-08', '2025-09', '2025-10'],
+                datasets: [{
+                    label: 'Crime Count',
+                    data: [300, 320, 310, 330, 340, 350, 360, 370, 380, 390],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Monthly Crime Count' }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Month (YYYY-MM)' } },
+                    y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+                }
+            }
+        });
+        // Crime Count by Day of Week
+        new Chart(document.getElementById('crimeWeekdayChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                datasets: [{
+                    label: 'Crime Count',
+                    data: [100, 120, 110, 130, 140, 150, 160],
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Crime Count by Day of Week' }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Day of Week' } },
+                    y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+                }
+            }
+        });
+        // Location Description Distribution (Top 10)
+        new Chart(document.getElementById('locationDescPie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['STREET', 'APARTMENT', 'RESIDENCE', 'SIDEWALK', 'SMALL RETAIL STORE', 'PARKING LOT / GARAGE (NON RESIDENTIAL)', 'DEPARTMENT STORE', 'ALLEY', 'RESTAURANT', 'OTHER (SPECIFY)', 'Other'],
+                datasets: [{
+                    label: 'Crime Count',
+                    data: [800, 600, 500, 400, 300, 250, 200, 150, 100, 80, 70],
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                        '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                    ]
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Location Description Distribution (Top 10)' }
+                }
+            }
+        });
+        // Arrest Distribution
+        new Chart(document.getElementById('arrestPie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Arrested', 'Not Arrested'],
+                datasets: [{
+                    label: 'Count',
+                    data: [400, 1600],
+                    backgroundColor: ['#36A2EB', '#FF6384']
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Arrest Distribution' }
+                }
+            }
+        });
+        // Domestic Violence Distribution
+        new Chart(document.getElementById('domesticPie').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Domestic Violence', 'Non-Domestic Violence'],
+                datasets: [{
+                    label: 'Count',
+                    data: [300, 1700],
+                    backgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Domestic Violence Distribution' }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
