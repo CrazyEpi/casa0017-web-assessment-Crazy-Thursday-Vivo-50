@@ -96,7 +96,7 @@ const sampleArticles = [
     thumb: "https://images.foxtv.com/c107833-mcdn.mp.lura.live/expiretime=2082787200/f6617ab47c7155e7646afbe432adab47990784e034494a4c01a3d5daaacbc5b2/iupl/EF4/2F7/568/320/EF42F74116A7611ECA94465AC6DDC4CE.jpg?ve=1&tl=1"
   },
   {
-   title: "Three men hospitalized after South Lawndale shooting, police say",
+    title: "Three men hospitalized after South Lawndale shooting, police say",
     url: "https://www.fox32chicago.com/news/three-men-hospitalized-after-south-lawndale-shooting-police-say",
     excerpt: "Three men have been hospitalized after a shooting in South Lawndale on Saturday, according to Chicago police.",
     time: "October 25, 2025 4:06 PM CDT",
@@ -214,4 +214,54 @@ function renderArticles(articles, containerId = "article-list") {
 
 window.addEventListener("DOMContentLoaded", () => {
   renderArticles(sampleArticles);
+});
+
+// ZIP Code Search Function
+
+// Get the search box element
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+
+// Clicking the search button event
+searchBtn.addEventListener("click", async () => {
+  const query = searchInput.value.trim();
+  if (!query) {
+    alert("Please enter a ZIP code to search.");
+    return;
+  }
+
+  try {
+    // Use the OpenStreetMap Nominatim API to obtain the postal code, latitude and longitude
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?postalcode=${query}&country=United+States&format=json&limit=1`
+    );
+    const data = await res.json();
+
+    if (data.length === 0) {
+      alert("ZIP code not found. Please try another one.");
+      return;
+    }
+
+    // Obtain the first matching result
+    const { lat, lon, display_name } = data[0];
+
+    // The map jumps to this location.
+    map.setView([parseFloat(lat), parseFloat(lon)], 13);
+
+    // Add a marker to indicate the position
+    L.marker([lat, lon])
+      .addTo(map)
+      .bindPopup(`<b>${display_name}</b><br>ZIP Code: ${query}`)
+      .openPopup();
+  } catch (err) {
+    console.error("Search error:", err);
+    alert("Error searching ZIP code. Please try again later.");
+  }
+});
+
+// Press the Enter key to trigger the search
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    searchBtn.click();
+  }
 });
