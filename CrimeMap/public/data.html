@@ -13,7 +13,7 @@
         <div class="logo">Crime <br> Mapper</div>
         <div class="nav-buttons">
             <button onclick="location.href='index.html'">Home</button>
-            <button onclick="location.href='data(static).html'">Data</button>
+            <button onclick="location.href='data.html'">Data</button>
         </div>
         <div class="search-box">
             <button>🔍</button>
@@ -64,14 +64,14 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        // Crime Type Distribution (Top 10)
+        // Chart: Crime Type Distribution (Top 10)
         new Chart(document.getElementById('crimeTypeChart').getContext('2d'), {
             type: 'pie',
             data: {
-                labels: ['THEFT', 'BATTERY', 'CRIMINAL DAMAGE', 'ASSAULT', 'DECEPTIVE PRACTICE', 'BURGLARY', 'MOTOR VEHICLE THEFT', 'ROBBERY', 'NARCOTICS', 'CRIMINAL TRESPASS', 'Other'],
+                labels: ['THEFT', 'BATTERY', 'CRIMINAL DAMAGE', 'MOTOR VEHICLE THEFT', 'ASSAULT', 'OTHER OFFENSE', 'DECEPTIVE PRACTICE', 'ROBBERY', 'BURGLARY', 'WEAPONS VIOLATION', 'Other'],
                 datasets: [{
                     label: 'Crime Count',
-                    data: [1200, 950, 800, 700, 650, 600, 550, 500, 450, 400, 300],
+                    data: [158473, 121889, 77635, 63208, 62152, 45171, 44000, 24649, 22603, 20758, 54969],
                     backgroundColor: [
                         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
                         '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
@@ -86,14 +86,14 @@
                 }
             }
         });
-        // Crime Description Distribution (Top 10)
+        // Chart: Crime Description Distribution (Top 10)
         new Chart(document.getElementById('crimeDescPie').getContext('2d'), {
             type: 'pie',
             data: {
-                labels: ['OVER $500', 'SIMPLE', 'TO VEHICLE', 'DOMESTIC BATTERY SIMPLE', 'TO PROPERTY', 'RETAIL THEFT', 'AGGRAVATED', 'POSSESSION', 'TO STATE SUP PROP', 'TO LAND', 'Other'],
+                labels: ['SIMPLE', 'DOMESTIC BATTERY SIMPLE', '$500 AND UNDER', 'OVER $500', 'AUTOMOBILE', 'TO VEHICLE', 'RETAIL THEFT', 'TO PROPERTY', 'AGGRAVATED - HANDGUN', 'FROM BUILDING', 'Other'],
                 datasets: [{
                     label: 'Crime Count',
-                    data: [900, 850, 800, 750, 700, 650, 600, 550, 500, 450, 400],
+                    data: [83724, 54121, 49363, 49055, 45387, 43913, 33432, 32534, 16523, 14262, 273193],
                     backgroundColor: [
                         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
                         '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
@@ -108,39 +108,41 @@
                 }
             }
         });
-        // Monthly Crime Count
+        // Chart: Monthly Crime Count (All Years)
         new Chart(document.getElementById('crimeMonthChart').getContext('2d'), {
             type: 'bar',
             data: {
-                labels: ['2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06', '2025-07', '2025-08', '2025-09', '2025-10'],
-                datasets: [{
-                    label: 'Crime Count',
-                    data: [300, 320, 310, 330, 340, 350, 360, 370, 380, 390],
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [
+                    {
+                        label: 'Crime Count',
+                        data: [59322, 54865, 61372, 60799, 65590, 66854, 70534, 68105, 60544, 45528, 41117, 40877],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: { display: false },
-                    title: { display: true, text: 'Monthly Crime Count' }
+                    title: { display: true, text: 'Monthly Crime Count (All Years)' }
                 },
                 scales: {
-                    x: { title: { display: true, text: 'Month (YYYY-MM)' } },
+                    x: { title: { display: true, text: 'Month' } },
                     y: { title: { display: true, text: 'Count' }, beginAtZero: true }
                 }
             }
         });
-        // Crime Count by Day of Week
+        // Chart: Crime Count by Day of Week
         new Chart(document.getElementById('crimeWeekdayChart').getContext('2d'), {
             type: 'bar',
             data: {
                 labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
                 datasets: [{
                     label: 'Crime Count',
-                    data: [100, 120, 110, 130, 140, 150, 160],
+                    data: [99947, 99669, 98292, 97947, 97247, 101445, 100960],
                     backgroundColor: 'rgba(255, 99, 132, 0.6)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
@@ -158,14 +160,14 @@
                 }
             }
         });
-        // Location Description Distribution (Top 10)
+        // Chart: Location Description Distribution (Top 10)
         new Chart(document.getElementById('locationDescPie').getContext('2d'), {
             type: 'pie',
             data: {
-                labels: ['STREET', 'APARTMENT', 'RESIDENCE', 'SIDEWALK', 'SMALL RETAIL STORE', 'PARKING LOT / GARAGE (NON RESIDENTIAL)', 'DEPARTMENT STORE', 'ALLEY', 'RESTAURANT', 'OTHER (SPECIFY)', 'Other'],
+                labels: ['STREET', 'APARTMENT', 'RESIDENCE', 'SIDEWALK', 'PARKING LOT / GARAGE (NON RESIDENTIAL)', 'SMALL RETAIL STORE', 'ALLEY', 'RESTAURANT', 'DEPARTMENT STORE', 'OTHER (SPECIFY)', 'Other'],
                 datasets: [{
                     label: 'Crime Count',
-                    data: [800, 600, 500, 400, 300, 250, 200, 150, 100, 80, 70],
+                    data: [192579, 132651, 83542, 35976, 24894, 23791, 16137, 15557, 13962, 11135, 145283],
                     backgroundColor: [
                         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
                         '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
@@ -180,14 +182,14 @@
                 }
             }
         });
-        // Arrest Distribution
+        // Chart: Arrest Distribution
         new Chart(document.getElementById('arrestPie').getContext('2d'), {
             type: 'pie',
             data: {
                 labels: ['Arrested', 'Not Arrested'],
                 datasets: [{
                     label: 'Count',
-                    data: [400, 1600],
+                    data: [95660, 599847],
                     backgroundColor: ['#36A2EB', '#FF6384']
                 }]
             },
@@ -199,15 +201,15 @@
                 }
             }
         });
-        // Domestic Violence Distribution
+        // Chart: Domestic Violence Distribution
         new Chart(document.getElementById('domesticPie').getContext('2d'), {
             type: 'pie',
             data: {
-                labels: ['Domestic Violence', 'Non-Domestic Violence'],
+                labels: ['Non-Domestic Violence', 'Domestic Violence'],
                 datasets: [{
                     label: 'Count',
-                    data: [300, 1700],
-                    backgroundColor: ['#FF6384', '#36A2EB']
+                    data: [567655, 127852],
+                    backgroundColor: ['#36A2EB', '#FF6384']
                 }]
             },
             options: {
