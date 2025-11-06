@@ -36,12 +36,37 @@ function detectTable() {
 const TABLE = detectTable();
 console.log(`Using table: ${TABLE}`);
 
+// map front-end "category" (UI terms) to Chicago "Primary Type"
+function normalizePrimaryType(query) {
+  // accept either ?primaryType= or ?category=
+  const raw = (query.primaryType || query.category || "").trim();
+
+  if (!raw || raw.toLowerCase() === "all") return null;
+
+  // ui → dataset primary type (case-insensitive)
+  const ui = raw.toLowerCase();
+  const mapUIToCPD = {
+    // your UI options:
+    // "Theft" | "Vandalism" | "Traffic" | "Noise" | "Other"
+    theft: "THEFT",
+    vandalism: "CRIMINAL DAMAGE",
+    traffic: "TRAFFIC VIOLATION",        // 若库中没有此值，将回退到原始传值匹配
+    noise: "PUBLIC PEACE VIOLATION",     // 若库中没有此值，将回退到原始传值匹配
+    other: "OTHER OFFENSE"
+  };
+
+  const mapped = mapUIToCPD[ui];
+
+  // 如果映射不到，直接用用户原值做不区分大小写匹配（兼容真实 Primary Type，如 BATTERY/ASSAULT等）
+  return mapped || raw;
+}
+
 // query
 function buildWhere({ primaryType, dateFrom, dateTo, bbox }) {
   const where = [];
   const params = [];
 
-  // bounding box
+  // bbox
   if (bbox) {
     const parts = bbox.split(",").map(Number);
     if (parts.length === 4 && parts.every(Number.isFinite)) {
@@ -51,7 +76,7 @@ function buildWhere({ primaryType, dateFrom, dateTo, bbox }) {
     }
   }
 
-  // type filter
+  // type filter (case-insensitive)
   if (primaryType && primaryType !== "All") {
     where.push(`UPPER("Primary Type") = UPPER(?)`);
     params.push(primaryType);
@@ -61,13 +86,21 @@ function buildWhere({ primaryType, dateFrom, dateTo, bbox }) {
 }
 
 // API: return GeoJSON points
-// SUPPORT: ?primaryType= &dateFrom= &dateTo= &bbox= &limit=
+// SUPPORT: ?category= or ?primaryType= &dateFrom= &dateTo= &bbox= &limit=
 app.get("/api/points", (req, res) => {
   try {
-    const { primaryType, dateFrom, dateTo, bbox, limit, offset } = req.query;
-    const { where, params } = buildWhere({ primaryType, dateFrom, dateTo, bbox });
+    // accept both primaryType and category from front-end
+    const resolvedPrimary = normalizePrimaryType(req.query);
 
-    // select required columns
+    const { dateFrom, dateTo, bbox, limit, offset } = req.query;
+    const { where, params } = buildWhere({
+      primaryType: resolvedPrimary,
+      dateFrom,
+      dateTo,
+      bbox
+    });
+
+    // select required columns (cast lat/lng to REAL)
     const baseSQL = `
       SELECT
         "ID" as id,
@@ -79,22 +112,20 @@ app.get("/api/points", (req, res) => {
         "Arrest" as arrest,
         "District" as district,
         "Ward" as ward,
-        "Latitude" as lat,
-        "Longitude" as lng
+        CAST("Latitude"  AS REAL) as lat,
+        CAST("Longitude" AS REAL) as lng
       FROM "${TABLE}"
       ${where.length ? "WHERE " + where.join(" AND ") : ""}
       ORDER BY "Date" DESC
       LIMIT ? OFFSET ?
     `;
 
-    // set limits
     const lim = Math.min(Number(limit) || 3000, 20000);
     const off = Number(offset) || 0;
 
-    // sql query
     const rows = db.prepare(baseSQL).all(...params, lim, off);
 
-    // time filter with js
+    // date filter with JS (to be consistent & robust)
     let filtered = rows;
     if (dateFrom || dateTo) {
       const from = dateFrom ? new Date(dateFrom) : null;
@@ -107,7 +138,7 @@ app.get("/api/points", (req, res) => {
       });
     }
 
-    // return GeoJSON "FeatureCollection"
+    // GeoJSON
     const geojson = {
       type: "FeatureCollection",
       features: filtered
@@ -137,20 +168,45 @@ app.get("/api/points", (req, res) => {
 });
 
 // API: count points
-// SUPPORT: count?
+// SUPPORT: used by front-end to get total number of filtered points
 app.get("/api/points/count", (req, res) => {
   try {
-    const { primaryType, dateFrom, dateTo, bbox } = req.query;
-    const { where, params } = buildWhere({ primaryType, dateFrom, dateTo, bbox });
+    const resolvedPrimary = normalizePrimaryType(req.query);
+    const { dateFrom, dateTo, bbox } = req.query;
 
+    const { where, params } = buildWhere({
+      primaryType: resolvedPrimary,
+      dateFrom,
+      dateTo,
+      bbox
+    });
+
+    // pull only date/coords for lightweight counting, cast to REAL
     const sql = `
-      SELECT COUNT(*) as count
+      SELECT
+        "Date" as date,
+        CAST("Latitude"  AS REAL) as lat,
+        CAST("Longitude" AS REAL) as lng
       FROM "${TABLE}"
       ${where.length ? "WHERE " + where.join(" AND ") : ""}
     `;
 
-    const result = db.prepare(sql).get(...params);
-    res.json({ count: result.count });
+    const rows = db.prepare(sql).all(...params);
+
+    // JS-side date filter & coordinate sanity (same logic as /api/points)
+    let filtered = rows.filter(r => Number.isFinite(r.lat) && Number.isFinite(r.lng));
+    if (dateFrom || dateTo) {
+      const from = dateFrom ? new Date(dateFrom) : null;
+      const to   = dateTo   ? new Date(dateTo)   : null;
+      filtered = filtered.filter(r => {
+        const d = new Date(r.date);
+        if (from && d < from) return false;
+        if (to   && d > to)   return false;
+        return true;
+      });
+    }
+
+    res.json({ count: filtered.length });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: String(e) });

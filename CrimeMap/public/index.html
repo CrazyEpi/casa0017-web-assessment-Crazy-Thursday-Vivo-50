@@ -1,41 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>Leaflet Cluster App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <title>Crime Mapper - Chicago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
-  <nav class="topbar">
-    <div class="brand">Interactive Map with Clustering</div>
+
+  <!-- Intro modal popup -->
+  <div id="introModal" class="modal"
+    style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div
+      style="background:#fff; border-radius:12px; max-width:420px; width:90vw; padding:32px 24px; box-shadow:0 4px 24px rgba(0,0,0,0.18); text-align:center;">
+      <h2 style="margin-bottom:12px;">Welcome to Crime Mapper</h2>
+      <p style="font-size:17px; line-height:1.7; margin-bottom:18px;">Due to the consistently high crime rate in the
+        Chicago area,people have become fearful and worried about the criminal situation in this region.
+        This website visualizes Chicago crime data to help users understand the distribution and trends of different
+        crime types,so as to enable them to better avoid being victimized by crime</p>
+      <ul style="text-align:left; font-size:15px; margin-bottom:18px;">
+        <li>The map on the homepage can clearly show on the map which areas have higher crime rates, and it also allows
+          users to select the time period they want to view.</li>
+        <li>The "Data" page presents various statistical charts to help analyze crime patterns.</li>
+        <li>Use the search box on the top right to quickly locate the coordinates by entering the postal code.</li>
+      </ul>
+      <p style="font-size:17px; line-height:1.7; margin-bottom:18px;">We hope this website can help you gain a thorough
+        understanding of the crime situation in Chicago and assist you in avoiding the areas prone to crime,
+        thereby reducing your risk of being victimized by crime.</p>
+      <button id="closeIntroModal"
+        style="margin-top:8px; padding:8px 24px; font-size:16px; border:none; border-radius:6px; background:#36A2EB; color:#fff; cursor:pointer;">Got
+        it</button>
+    </div>
+  </div>
+  <!-- navigation bar -->
+  <div class="navbar">
+    <div class="logo">
+      Crime <br> Mapper
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='data.html'">Data</button>
+    </div>
+
+    <div class="search-box">
+      <button>🔍</button>
+      <input type="text" placeholder="Enter coordinates" />
+    </div>
+  </div>
+
+  <!-- map section -->
+  <div class="map-section">
+
+    <!-- controls -->
     <div class="controls">
       <label>Category:
         <select id="category">
           <option>All</option>
-          <option>Theft</option>
-          <option>Vandalism</option>
-          <option>Traffic</option>
-          <option>Noise</option>
-          <option>Other</option>
+          <option>THEFT</option>
+          <option>BATTERY</option>
+          <option>ASSAULT</option>
+          <option>CRIMINAL DAMAGE</option>
+          <option>DECEPTIVE PRACTICE</option>
+          <option>BURGLARY</option>
+          <option>MOTOR VEHICLE THEFT</option>
+          <option>WEAPONS VIOLATION</option>
         </select>
       </label>
+
       <label>From: <input type="date" id="dateFrom" /></label>
       <label>To: <input type="date" id="dateTo" /></label>
+
       <button id="apply">Apply</button>
       <button id="reset">Reset</button>
     </div>
-  </nav>
-  <div id="map"></div>
 
+    <!-- map -->
+    <div id="map"></div>
+  </div>
+
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- function logic -->
   <script src="./app.js"></script>
+  <script>
+    // Intro modal popup logic
+    // Always show intro modal popup on every page load
+    window.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('introModal').style.display = 'flex';
+      document.getElementById('closeIntroModal').onclick = function () {
+        document.getElementById('introModal').style.display = 'none';
+      };
+    });
+  </script>
 </body>
+
 </html>
