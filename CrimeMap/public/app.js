@@ -21,7 +21,7 @@ function getBboxParam() {
 
 async function fetchPoints({ useBbox = true } = {}) {
   const p = new URLSearchParams();
-  if ($category.value && $category.value !== "All") p.set("category", $category.value);
+  if ($category.value && $category.value !== "All") p.set("primaryType", $category.value);
   if ($dateFrom.value) p.set("dateFrom", $dateFrom.value);
   if ($dateTo.value) p.set("dateTo", $dateTo.value);
   if (useBbox) p.set("bbox", getBboxParam());
@@ -35,10 +35,12 @@ function renderPoints(geojson) {
     const [lng, lat] = f.geometry.coordinates;
     const p = f.properties || {};
     const marker = L.marker([lat, lng]).bindPopup(
-      `<b>${p.name || "Point"}</b><br/>
-       Category: ${p.category || "N/A"}<br/>
-       DateTime: ${p.datetime || "N/A"}<br/>
-       ID: ${p.id}`
+      `<b>${p.primaryType || "Unknown"}</b><br/>
+       Description: ${p.description || "N/A"}<br/>
+       Block: ${p.block || "N/A"}<br/>
+       Date: ${p.date || "N/A"}<br/>
+       Arrest: ${p.arrest || "N/A"}<br/>
+       Case: ${p.caseNumber || p.id || "N/A"}`
     );
     clusterGroup.addLayer(marker);
   });
