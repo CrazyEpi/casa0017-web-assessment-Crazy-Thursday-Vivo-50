@@ -1,3 +1,4 @@
+// THIS IS TEMP FILE FOR TESTING ONLY
 const map = L.map("map", { zoomControl: true }).setView([41.88, -87.63], 11);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
