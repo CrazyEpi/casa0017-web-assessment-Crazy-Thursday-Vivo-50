@@ -1,7 +1,10 @@
-html, body, #map {
+html,
+body,
+#map {
   height: 100%;
   margin: 0;
 }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -80,7 +83,7 @@ body {
 /* map */
 #map {
   width: 100%;
-  height: 900px;
+  height: 70vh;
   border-radius: 6px;
 }
 
@@ -121,31 +124,35 @@ body {
 }
 
 .article-list-section {
-  width: 90%;           
-  margin: 20px auto;     
+  width: 90%;
+  margin: 20px auto;
   background: #fff;
-  border: none;          
-  border-radius: 0;      
-  box-shadow: none;      
-  padding: 36px 0 20px 0; 
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 36px 0 20px 0;
   color: #0b2747;
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
+
 .article-list-section .container {
   width: 100%;
   margin: 0;
-  padding: 0 20px;        
+  padding: 0 20px;
   text-align: left;
 }
+
 .article-list-section h2 {
   font-size: 28px;
   margin: 0 0 18px 0;
   color: #0b2b53;
   font-weight: 700;
 }
+
 .article-list {
   display: block;
 }
+
 .article-item {
   display: flex;
   gap: 18px;
@@ -153,9 +160,11 @@ body {
   align-items: flex-start;
   border-bottom: 1px solid #e6e9ee;
 }
+
 .article-item:last-child {
   border-bottom: none;
 }
+
 .article-thumb {
   width: 110px;
   height: 70px;
@@ -166,9 +175,11 @@ body {
   border-radius: 4px;
   overflow: hidden;
 }
+
 .article-meta {
   flex: 1 1 auto;
 }
+
 .article-title {
   font-size: 20px;
   margin: 0 0 6px 0;
@@ -177,27 +188,33 @@ body {
   font-weight: 700;
   text-decoration: none;
 }
+
 .article-title:hover {
   text-decoration: underline;
 }
+
 .article-excerpt {
   margin: 0 0 8px 0;
   color: #566b87;
   font-size: 14px;
 }
+
 .article-time {
   font-size: 12px;
   color: #98a6be;
 }
+
 .more-link {
   margin-top: 16px;
   text-align: right;
 }
+
 .more-link a {
   color: #08305f;
   text-decoration: none;
   font-weight: 600;
 }
+
 .more-link a:hover {
   text-decoration: underline;
 }
@@ -208,23 +225,243 @@ body {
     flex-direction: row;
     gap: 12px;
   }
+
   .article-thumb {
     width: 96px;
     height: 66px;
     flex: 0 0 96px;
   }
+
   .article-title {
     font-size: 17px;
   }
 }
+
 @media (max-width: 480px) {
   .article-item {
     flex-direction: column;
     align-items: stretch;
   }
+
   .article-thumb {
     width: 100%;
     height: 160px;
     flex: none;
   }
+}
+
+/* Navigation bar futuristic restyle */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 50%, #0a0f1f 100%);
+  border-bottom: 2px solid #00ffe7;
+  padding: 14px 28px;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  box-shadow: 0 4px 20px rgba(0, 255, 231, 0.15);
+}
+
+/* Logo 光效字体 */
+.logo {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-family: 'Segoe UI', 'Arial', 'sans-serif';
+
+  /* 渐变文字 */
+  background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* 微微发光效果 */
+  text-shadow: 0 0 4px #00ffe7, 0 0 2px #00ffe7;
+
+  margin-left: 4px;
+  margin-top: 2px;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+
+/* Heatmap 开关按钮样式 */
+.heatmap-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00ffe7;
+  text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+  cursor: pointer;
+}
+
+.heatmap-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #00ffe7;
+  cursor: pointer;
+}
+
+/* 搜索框保持未来风格 */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #00ffe7;
+  background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 100%);
+  padding: 8px 18px;
+  border-radius: 32px;
+  box-shadow: 0 0 12px rgba(0, 255, 231, 0.15), 0 0 6px #00ffe7 inset;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 17px;
+  padding-left: 12px;
+  width: 200px;
+  color: #00ffe7;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 0 4px #00ffe7;
+}
+
+.search-box input::placeholder {
+  color: #00ffe7aa;
+  opacity: 1;
+}
+
+.search-box button {
+  background: linear-gradient(90deg, #00ffe7 0%, #232526 100%);
+  border: 2px solid #00ffe7;
+  cursor: pointer;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #232526;
+  box-shadow: 0 0 8px #00ffe7, 0 0 4px #fff inset;
+  transition: background 0.3s, box-shadow 0.2s;
+}
+
+.search-box button:hover {
+  background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+  color: #00ffe7;
+  box-shadow: 0 2px 16px #00ffe7, 0 0 8px #fff inset;
+}
+
+/* ======== Map section restyle ======== */
+.map-section {
+  background: radial-gradient(circle at 50% 50%, #101820, #0a0f1f);
+  border: 2px solid rgba(0, 255, 231, 0.7);
+  box-shadow: 0 0 24px rgba(0, 255, 231, 0.25);
+}
+
+#map {
+  width: 100%;
+  height: 65vh;
+  border-radius: 10px;
+  box-shadow: 0 0 24px rgba(0, 255, 231, 0.25);
+}
+
+/* 控件区域颜色调整为半透明未来风 */
+.controls {
+  background: rgba(20, 30, 45, 0.9);
+  border: 1.5px solid #00ffe7;
+  border-radius: 10px;
+  color: #00ffe7;
+  box-shadow: 0 0 18px rgba(0, 255, 231, 0.2), inset 0 0 10px rgba(0, 255, 231, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* 文字光感 */
+.controls label,
+.controls select,
+.controls input {
+  color: #b8ffff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 255, 231, 0.3);
+  padding: 4px 6px;
+}
+
+/* ======== Futuristic Heatmap Switch ======== */
+.heatmap-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #00ffe7;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+}
+
+/* 外部容器 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+/* 隐藏原始 checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 滑块外观 */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #2a3542 0%, #3a4b55 100%);
+  border-radius: 28px;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 231, 0.3) inset, 0 0 6px rgba(0, 255, 231, 0.15);
+}
+
+/* 滑块圆点 */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background: #00ffe7;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #00ffe7, 0 0 8px #00ffe7 inset;
+  transition: all 0.3s ease;
+}
+
+/* 选中时动画与颜色变化 */
+.switch input:checked+.slider {
+  background: linear-gradient(90deg, #00ffe7 0%, #0a0f1f 100%);
+  box-shadow: 0 0 15px #00ffe7, 0 0 6px #00ffe7 inset;
+}
+
+.switch input:checked+.slider::before {
+  transform: translateX(24px);
+  background: #ffffff;
+  box-shadow: 0 0 18px #ffffff, 0 0 8px #00ffe7 inset;
+}
+
+/* 鼠标悬停发光 */
+.switch:hover .slider {
+  box-shadow: 0 0 18px rgba(0, 255, 231, 0.5), 0 0 6px rgba(0, 255, 231, 0.2) inset;
 }
