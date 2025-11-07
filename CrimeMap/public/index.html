@@ -78,6 +78,11 @@
         </select>
       </label>
 
+      <label style="display:inline-flex;align-items:center;gap:6px;">
+        <input type="checkbox" id="toggleHeat" checked />
+        Heatmap
+      </label>
+
       <label>From: <input type="date" id="dateFrom" /></label>
       <label>To: <input type="date" id="dateTo" /></label>
 
@@ -105,6 +110,7 @@
   <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
   <!-- function logic -->
   <script src="./app.js"></script>

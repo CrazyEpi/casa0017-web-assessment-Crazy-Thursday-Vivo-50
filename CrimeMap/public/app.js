@@ -1,18 +1,36 @@
 const map = L.map("map", { zoomControl: true }).setView([41.8781, -87.6298], 11);
 
+
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: "&copy; OpenStreetMap contributors",
 }).addTo(map);
 
-let clusterGroup = L.markerClusterGroup();
+let clusterGroup = L.markerClusterGroup({
+  chunkedLoading: true, //enable chunked loading
+  chunkInterval: 50,
+  chunkDelay: 25,
+  removeOutsideVisibleBounds: true,
+  spiderfyOnMaxZoom: false,
+  disableClusteringAtZoom: 17
+});
 map.addLayer(clusterGroup);
+
+// Heatmap layer
+let heatLayer = L.heatLayer([], {
+  radius: 20,
+  blur: 15,
+  maxZoom: 17,
+  // gradient: {0.2:'#00461bff', 0.4:'#67b600ff', 0.6:'#ffff00', 0.8:'#ff8800', 1:'#ff0000'} // 可选自定义配色
+});
 
 const $category = document.getElementById("category");
 const $dateFrom = document.getElementById("dateFrom");
 const $dateTo = document.getElementById("dateTo");
 const $apply = document.getElementById("apply");
 const $reset = document.getElementById("reset");
+const $toggleHeat = document.getElementById("toggleHeat");
+if ($toggleHeat) $toggleHeat.checked = false;
 
 function getBboxParam() {
   const b = map.getBounds();
@@ -25,9 +43,18 @@ async function fetchPoints({ useBbox = true } = {}) {
   if ($dateFrom.value) p.set("dateFrom", $dateFrom.value);
   if ($dateTo.value) p.set("dateTo", $dateTo.value);
   if (useBbox) p.set("bbox", getBboxParam());
+  p.set("z", map.getZoom());
   const res = await fetch(`/api/points?${p.toString()}`);
   return res.json();
 }
+
+// Convert GeoJSON to heat points
+function toHeatPoints(geojson) {
+  return geojson.features.map(f => {
+    const [lng, lat] = f.geometry.coordinates;
+    return [lat, lng, 1];
+  });
+} 
 
 function renderPoints(geojson) {
   clusterGroup.clearLayers();
@@ -44,6 +71,17 @@ function renderPoints(geojson) {
     );
     clusterGroup.addLayer(marker);
   });
+
+  const heatPoints = toHeatPoints(geojson);
+  heatLayer.setLatLngs(heatPoints);
+
+  if ($toggleHeat && $toggleHeat.checked) {
+    if (!map.hasLayer(heatLayer)) map.addLayer(heatLayer);
+    if (map.hasLayer(clusterGroup)) map.removeLayer(clusterGroup);
+  } else {
+    if (map.hasLayer(heatLayer)) map.removeLayer(heatLayer);
+    if (!map.hasLayer(clusterGroup)) map.addLayer(clusterGroup);
+  }
 }
 
 fetchPoints({ useBbox: true }).then(renderPoints);
@@ -60,6 +98,19 @@ $reset.addEventListener("click", async () => {
   const data = await fetchPoints({ useBbox: true });
   renderPoints(data);
 });
+
+// Heatmap toggle
+if ($toggleHeat) {
+  $toggleHeat.addEventListener("change", () => {
+    if ($toggleHeat.checked) {
+      if (!map.hasLayer(heatLayer)) map.addLayer(heatLayer);
+      if (map.hasLayer(clusterGroup)) map.removeLayer(clusterGroup);
+    } else {
+      if (map.hasLayer(heatLayer)) map.removeLayer(heatLayer);
+      if (!map.hasLayer(clusterGroup)) map.addLayer(clusterGroup);
+    }
+  });
+}
 
 let timer;
 map.on("moveend", () => {
