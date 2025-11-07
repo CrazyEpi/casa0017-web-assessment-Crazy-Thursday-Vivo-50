@@ -25,10 +25,23 @@
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: orange;
-            line-height: 1.2;
+            font-size: 32px;
+            font-weight: 900;
+            color: #00ffe7;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            font-family: 'Segoe UI', 'Arial', 'sans-serif';
+            text-shadow: 0 0 12px #00ffe7, 0 2px 8px #232526;
+            background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-left: 4px;
+            margin-top: 2px;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .nav-buttons {
@@ -132,7 +145,7 @@
 <body>
     <div class="navbar">
         <div class="logo">
-            Crime <br> Map
+            Crime <br> Mapper
         </div>
         <div class="nav-buttons">
             <button onclick="location.href='index.html'">Home</button>
@@ -140,7 +153,7 @@
         </div>
         <div class="search-box">
             <button>🔍</button>
-            <input type="text" placeholder="Enter coordinates">
+            <input type="text" placeholder="Enter ZIP code">
         </div>
     </div>
     <div class="map-section">
