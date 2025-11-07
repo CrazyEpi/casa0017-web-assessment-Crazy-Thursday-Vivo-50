@@ -12,7 +12,7 @@ app.use(express.static("public"));
 // database path
 const DB_PATH =
   process.env.CRIME_DB_PATH ||
-  path.join(__dirname, "data", "Crimes_2023-2025_20251002.db");
+  path.join(__dirname, "data", "Crimes_2025_20251002.db");
 
 const db = new Database(DB_PATH, { readonly: true });
 
