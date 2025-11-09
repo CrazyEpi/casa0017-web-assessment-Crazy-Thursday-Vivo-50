@@ -1,12 +1,467 @@
-html, body, #map { height: 100%; margin: 0; }
-.topbar {
-  position: fixed; z-index: 1000; top: 0; left: 0; right: 0; height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 12px; background: #1f2937; color: #fff;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+html,
+body,
+#map {
+  height: 100%;
+  margin: 0;
 }
-.controls label { margin-right: 8px; font-size: 14px; }
-.controls select, .controls input, .controls button {
-  margin-left: 4px; padding: 4px 8px; font-size: 14px;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
-#map { position: absolute; top: 56px; bottom: 0; left: 0; right: 0; }
+
+/* navigation bar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #d3d3d3;
+  padding: 10px;
+  border-bottom: 2px solid #000;
+  position: relative;
+  z-index: 2000;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: orange;
+  line-height: 1.2;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-buttons button {
+  font-size: 18px;
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #a9a9a9;
+  border: 1px solid black;
+  transition: background-color 0.3s;
+}
+
+.nav-buttons button:hover {
+  background-color: #808080;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #a9a9a9;
+  padding: 5px;
+}
+
+.search-box input {
+  border: none;
+  background-color: #a9a9a9;
+  outline: none;
+  font-size: 16px;
+  padding-left: 5px;
+}
+
+.search-box button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* map section */
+.map-section {
+  width: 90%;
+  margin: 20px auto;
+  border: 3px solid #333;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* map */
+#map {
+  width: 100%;
+  height: 70vh;
+  border-radius: 6px;
+}
+
+/* controls style */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+}
+
+.controls label {
+  font-size: 14px;
+  margin-right: 4px;
+}
+
+.controls select,
+.controls input,
+.controls button {
+  font-size: 14px;
+  padding: 4px 8px;
+}
+
+.controls button {
+  background-color: #a9a9a9;
+  border: 1px solid #000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.controls button:hover {
+  background-color: #808080;
+}
+
+.article-list-section {
+  width: 90%;
+  margin: 20px auto;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 36px 0 20px 0;
+  color: #0b2747;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.article-list-section .container {
+  width: 100%;
+  margin: 0;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.article-list-section h2 {
+  font-size: 28px;
+  margin: 0 0 18px 0;
+  color: #0b2b53;
+  font-weight: 700;
+}
+
+.article-list {
+  display: block;
+}
+
+.article-item {
+  display: flex;
+  gap: 18px;
+  padding: 14px 0;
+  align-items: flex-start;
+  border-bottom: 1px solid #e6e9ee;
+}
+
+.article-item:last-child {
+  border-bottom: none;
+}
+
+.article-thumb {
+  width: 110px;
+  height: 70px;
+  flex: 0 0 110px;
+  background: #ddd;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.article-meta {
+  flex: 1 1 auto;
+}
+
+.article-title {
+  font-size: 20px;
+  margin: 0 0 6px 0;
+  color: #08305f;
+  line-height: 1.2;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.article-title:hover {
+  text-decoration: underline;
+}
+
+.article-excerpt {
+  margin: 0 0 8px 0;
+  color: #566b87;
+  font-size: 14px;
+}
+
+.article-time {
+  font-size: 12px;
+  color: #98a6be;
+}
+
+.more-link {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.more-link a {
+  color: #08305f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.more-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .article-item {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .article-thumb {
+    width: 96px;
+    height: 66px;
+    flex: 0 0 96px;
+  }
+
+  .article-title {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .article-thumb {
+    width: 100%;
+    height: 160px;
+    flex: none;
+  }
+}
+
+/* Navigation bar futuristic restyle */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 50%, #0a0f1f 100%);
+  border-bottom: 2px solid #00ffe7;
+  padding: 14px 28px;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  box-shadow: 0 4px 20px rgba(0, 255, 231, 0.15);
+}
+
+/* Logo */
+.logo {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-family: 'Segoe UI', 'Arial', 'sans-serif';
+
+  /* Gradient Text */
+  background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Glowing effect with faint light */
+  text-shadow: 0 0 4px #00ffe7, 0 0 2px #00ffe7;
+
+  margin-left: 4px;
+  margin-top: 2px;
+  user-select: none;
+  transform: translateZ(0);
+}
+
+
+/* Heatmap switch button style */
+.heatmap-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #00ffe7;
+  text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+  cursor: pointer;
+}
+
+.heatmap-toggle input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #00ffe7;
+  cursor: pointer;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 2px solid #00ffe7;
+  background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 100%);
+  padding: 8px 18px;
+  border-radius: 32px;
+  box-shadow: 0 0 12px rgba(0, 255, 231, 0.15), 0 0 6px #00ffe7 inset;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 17px;
+  padding-left: 12px;
+  width: 200px;
+  color: #00ffe7;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 0 4px #00ffe7;
+}
+
+.search-box input::placeholder {
+  color: #00ffe7aa;
+  opacity: 1;
+}
+
+.search-box button {
+  background: linear-gradient(90deg, #00ffe7 0%, #232526 100%);
+  border: 2px solid #00ffe7;
+  cursor: pointer;
+  font-size: 22px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #232526;
+  box-shadow: 0 0 8px #00ffe7, 0 0 4px #fff inset;
+  transition: background 0.3s, box-shadow 0.2s;
+}
+
+.search-box button:hover {
+  background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+  color: #00ffe7;
+  box-shadow: 0 2px 16px #00ffe7, 0 0 8px #fff inset;
+}
+
+/* Map section restyle */
+.map-section {
+  background: radial-gradient(circle at 50% 50%, #101820, #0a0f1f);
+  border: 2px solid rgba(0, 255, 231, 0.7);
+  box-shadow: 0 0 24px rgba(0, 255, 231, 0.25);
+}
+
+#map {
+  width: 100%;
+  height: 65vh;
+  border-radius: 10px;
+  box-shadow: 0 0 24px rgba(0, 255, 231, 0.25);
+}
+
+/* Color of the control area */
+.controls {
+  background: rgba(20, 30, 45, 0.9);
+  border: 1.5px solid #00ffe7;
+  border-radius: 10px;
+  color: #00ffe7;
+  box-shadow: 0 0 18px rgba(0, 255, 231, 0.2), inset 0 0 10px rgba(0, 255, 231, 0.08);
+  backdrop-filter: blur(6px);
+}
+
+/* Textual luminosity */
+.controls label,
+.controls select,
+.controls input {
+  color: #b8ffff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 255, 231, 0.3);
+  padding: 4px 6px;
+}
+
+/* Futuristic Heatmap Switch */
+.heatmap-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #00ffe7;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+}
+
+/* External container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+/* Hide original checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The appearance of the slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #2a3542 0%, #3a4b55 100%);
+  border-radius: 28px;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 231, 0.3) inset, 0 0 6px rgba(0, 255, 231, 0.15);
+}
+
+/* Slider dot */
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background: #00ffe7;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #00ffe7, 0 0 8px #00ffe7 inset;
+  transition: all 0.3s ease;
+}
+
+/* Animation and color changes when selected */
+.switch input:checked+.slider {
+  background: linear-gradient(90deg, #00ffe7 0%, #0a0f1f 100%);
+  box-shadow: 0 0 15px #00ffe7, 0 0 6px #00ffe7 inset;
+}
+
+.switch input:checked+.slider::before {
+  transform: translateX(24px);
+  background: #ffffff;
+  box-shadow: 0 0 18px #ffffff, 0 0 8px #00ffe7 inset;
+}
+
+/* Mouse cursor hovering with illumination */
+.switch:hover .slider {
+  box-shadow: 0 0 18px rgba(0, 255, 231, 0.5), 0 0 6px rgba(0, 255, 231, 0.2) inset;
+}

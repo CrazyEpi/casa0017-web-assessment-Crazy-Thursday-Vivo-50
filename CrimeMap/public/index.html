@@ -1,41 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <style>
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      color: #00ffe7;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      font-family: 'Segoe UI', 'Arial', 'sans-serif';
+      text-shadow: 0 0 12px #00ffe7, 0 2px 8px #232526;
+      background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-left: 4px;
+      margin-top: 2px;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav-buttons button {
+      font-size: 18px;
+      padding: 10px 28px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      border: 2px solid #00ffe7;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 255, 231, 0.08), 0 0 8px #00ffe7 inset;
+      color: #00ffe7;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background: linear-gradient(90deg, #0f2027 0%, #2c5364 100%);
+      transform: translateY(-2px) scale(1.07);
+      box-shadow: 0 4px 24px #00ffe7, 0 0 12px #00ffe7 inset;
+      color: #fff;
+    }
+
+    /* .search-box {
+      display: flex;
+      align-items: center;
+      border: 2px solid #00ffe7;
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      padding: 8px 18px;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(0, 255, 231, 0.08), 0 0 8px #00ffe7 inset;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 15px;
+      padding-left: 10px;
+      width: 150px;
+      color: #00ffe7;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px #00ffe7;
+    }
+
+    .search-box input::placeholder {
+      color: #00ffe7aa;
+      opacity: 1;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .search-box button {
+      background: linear-gradient(90deg, #00ffe7 0%, #232526 100%);
+      border: 2px solid #00ffe7;
+      cursor: pointer;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #232526;
+      box-shadow: 0 0 8px #00ffe7, 0 0 4px #fff inset;
+      transition: background 0.3s, box-shadow 0.2s;
+    }
+
+    .search-box button:hover {
+      background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+      color: #00ffe7;
+      box-shadow: 0 2px 16px #00ffe7, 0 0 8px #fff inset;
+    } */
+
+    /* Modern Apply/Reset buttons */
+    #apply,
+    #reset {
+      font-size: 16px;
+      padding: 8px 24px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #355c7d 0%, #6c5b7b 100%);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(44, 62, 80, 0.18);
+      margin-right: 10px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    #apply:hover,
+    #reset:hover {
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      transform: translateY(-2px) scale(1.05);
+      color: #00ffe7;
+    }
+  </style>
   <meta charset="utf-8" />
-  <title>Leaflet Cluster App</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet"
-    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <title>Crime Mapper - Chicago</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .nav-buttons button {
+      font-size: 18px;
+      padding: 10px 28px;
+      cursor: pointer;
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      border: 2px solid #00ffe7;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 255, 231, 0.08), 0 0 8px #00ffe7 inset;
+      color: #00ffe7;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background: linear-gradient(90deg, #0f2027 0%, #2c5364 100%);
+      transform: translateY(-2px) scale(1.07);
+      box-shadow: 0 4px 24px #00ffe7, 0 0 12px #00ffe7 inset;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 2px solid #00ffe7;
+      background: linear-gradient(90deg, #232526 0%, #414345 100%);
+      padding: 8px 18px;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(0, 255, 231, 0.08), 0 0 8px #00ffe7 inset;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 17px;
+      padding-left: 12px;
+      width: 200px;
+      color: #00ffe7;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px #00ffe7;
+    }
+
+    .search-box input::placeholder {
+      color: #00ffe7aa;
+      opacity: 1;
+      font-weight: 400;
+    }
+
+    .search-box button {
+      background: linear-gradient(90deg, #00ffe7 0%, #232526 100%);
+      border: 2px solid #00ffe7;
+      cursor: pointer;
+      font-size: 22px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #232526;
+      box-shadow: 0 0 8px #00ffe7, 0 0 4px #fff inset;
+      transition: background 0.3s, box-shadow 0.2s;
+    }
+
+    .search-box button:hover {
+      background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+      color: #00ffe7;
+      box-shadow: 0 2px 16px #00ffe7, 0 0 8px #fff inset;
+    }
+  </style>
 </head>
+
 <body>
-  <nav class="topbar">
-    <div class="brand">Interactive Map with Clustering</div>
+
+  <!-- Intro modal popup -->
+  <div id="introModal" class="modal"
+    style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div
+      style="background:#fff; border-radius:12px; max-width:420px; width:90vw; padding:32px 24px; box-shadow:0 4px 24px rgba(0,0,0,0.18); text-align:center;">
+      <h2 style="margin-bottom:12px;">Welcome to Crime Mapper</h2>
+      <p style="font-size:17px; line-height:1.7; margin-bottom:18px;">Due to the consistently high crime rate in the
+        Chicago area,people have become fearful and worried about the criminal situation in this region.
+        This website visualizes Chicago crime data to help users understand the distribution and trends of different
+        crime types,so as to enable them to better avoid being victimized by crime</p>
+      <ul style="text-align:left; font-size:15px; margin-bottom:18px;">
+        <li>The map on the homepage can clearly show on the map which areas have higher crime rates, and it also allows
+          users to select the time period they want to view.</li>
+        <li>Below the map on the homepage, we have also included some news related to crime in Chicago.
+          These can help you better understand the crime situation in Chicago. You can freely click to read them.</li>
+        <li>The "Data" page presents various statistical charts to help analyze crime patterns.</li>
+        <li>Use the search box on the top right to quickly locate the coordinates by entering the postal code.</li>
+      </ul>
+      <p style="font-size:17px; line-height:1.7; margin-bottom:18px;">We hope this website can help you gain a thorough
+        understanding of the crime situation in Chicago and assist you in avoiding the areas prone to crime,
+        thereby reducing your risk of being victimized by crime.</p>
+      <button id="closeIntroModal"
+        style="margin-top:8px; padding:8px 24px; font-size:16px; border:none; border-radius:6px; background:#36A2EB; color:#fff; cursor:pointer;">Got
+        it</button>
+    </div>
+  </div>
+  <!-- navigation bar -->
+  <div class="navbar">
+    <div class="logo">
+      Crime <br> Mapper
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="location.href='index.html'">Home</button>
+      <button onclick="location.href='data.html'">Data</button>
+      <div class="heatmap-toggle">
+        <span class="toggle-label">Heatmap</span>
+        <label class="switch">
+          <input type="checkbox" id="toggleHeat" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="search-box">
+      <button id="searchBtn">🔍</button>
+      <input type="text" id="searchInput" placeholder="Enter ZIP code (60007)" />
+    </div>
+
+  </div>
+
+  <!-- map section -->
+  <div class="map-section">
+
+    <!-- controls -->
     <div class="controls">
       <label>Category:
         <select id="category">
           <option>All</option>
-          <option>Theft</option>
-          <option>Vandalism</option>
-          <option>Traffic</option>
-          <option>Noise</option>
-          <option>Other</option>
+          <option>THEFT</option>
+          <option>BATTERY</option>
+          <option>ASSAULT</option>
+          <option>CRIMINAL DAMAGE</option>
+          <option>DECEPTIVE PRACTICE</option>
+          <option>BURGLARY</option>
+          <option>MOTOR VEHICLE THEFT</option>
+          <option>WEAPONS VIOLATION</option>
         </select>
       </label>
-      <label>From: <input type="date" id="dateFrom" /></label>
-      <label>To: <input type="date" id="dateTo" /></label>
+
+      <label>From: <input type="date" id="dateFrom" lang="en" /></label>
+      <label>To: <input type="date" id="dateTo" lang="en" /></label>
+
+
       <button id="apply">Apply</button>
       <button id="reset">Reset</button>
     </div>
-  </nav>
-  <div id="map"></div>
 
+    <!-- map -->
+    <div id="map"></div>
+  </div>
+
+  <!--news-->
+  <section id="article-list-section" class="article-list-section">
+    <div class="container">
+      <h2>Chicago — related crime news</h2>
+      <div id="article-list" class="article-list"></div>
+      <div class="more-link">
+        <a href="https://www.fox32chicago.com/tag/crime-publicsafety" target="_blank" rel="noopener">
+          to see more Chicago crime news »
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <!-- function logic -->
   <script src="./app.js"></script>
+  <script>
+    // Intro modal popup logic
+    // Always show intro modal popup on every page load
+    window.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('introModal').style.display = 'flex';
+      document.getElementById('closeIntroModal').onclick = function () {
+        document.getElementById('introModal').style.display = 'none';
+      };
+    });
+  </script>
 </body>
+
 </html>

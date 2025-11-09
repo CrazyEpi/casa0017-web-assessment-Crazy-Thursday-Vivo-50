@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Crime Map - Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 50%, #0a0f1f 100%);
+            border-bottom: 2px solid #00ffe7;
+            padding: 14px 28px;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            box-shadow: 0 4px 20px rgba(0, 255, 231, 0.15);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: #00ffe7;
+            letter-spacing: 2px;
+            line-height: 1;
+            font-family: 'Segoe UI', 'Arial', 'sans-serif';
+            text-shadow: 0 0 4px #00ffe7, 0 0 2px #00ffe7;
+            background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-left: 4px;
+            margin-top: 2px;
+            user-select: none;
+            transform: translateZ(0);
+        }
+
+        .nav-buttons button {
+            font-size: 18px;
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: #a9a9a9;
+            border: 1px solid black;
+            transition: background-color 0.3s;
+        }
+
+        .nav-buttons button {
+            font-size: 18px;
+            padding: 10px 28px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #232526 0%, #414345 100%);
+            border: 2px solid #00ffe7;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 255, 231, 0.08), 0 0 8px #00ffe7 inset;
+            color: #00ffe7;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 6px #00ffe7, 0 0 2px #fff;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #808080;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            border: 2px solid #00ffe7;
+            background: linear-gradient(90deg, #0a0f1f 0%, #1c2a38 100%);
+            padding: 8px 18px;
+            border-radius: 32px;
+            box-shadow: 0 0 12px rgba(0, 255, 231, 0.15), 0 0 6px #00ffe7 inset;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 17px;
+            padding-left: 12px;
+            width: 200px;
+            color: #00ffe7;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 0 4px #00ffe7;
+        }
+
+        .search-box input::placeholder {
+            color: #00ffe7aa;
+            opacity: 1;
+        }
+
+        .search-box button {
+            background: linear-gradient(90deg, #00ffe7 0%, #232526 100%);
+            border: 2px solid #00ffe7;
+            cursor: pointer;
+            font-size: 22px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #232526;
+            box-shadow: 0 0 8px #00ffe7, 0 0 4px #fff inset;
+            transition: background 0.3s, box-shadow 0.2s;
+        }
+
+        .search-box button:hover {
+            background: linear-gradient(90deg, #232526 0%, #00ffe7 100%);
+            color: #00ffe7;
+            box-shadow: 0 2px 16px #00ffe7, 0 0 8px #fff inset;
+        }
+
+        .map-section {
+            margin: 20px auto;
+            width: 90%;
+            border: 3px solid #00ffe7;
+            border-radius: 8px;
+            background-color: #1c2a38;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #00ffe7;
+        }
+
+        .below-map {
+            width: 90%;
+            margin: 0 auto 40px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">
+            Crime <br> Mapper
+        </div>
+        <div class="nav-buttons">
+            <button onclick="location.href='index.html'">Home</button>
+            <button onclick="location.href='data.html'">Data</button>
+        </div>
+        <div class="search-box">
+            <button>🔍</button>
+            <input type="text" placeholder="Enter ZIP code">
+        </div>
+    </div>
+    <div class="map-section">
+        <h2>Data Page</h2>
+        <p>This page contains data-related content.(Loading may take a while)</p>
+    </div>
+    <div class="below-map">
+        <h2>About this Data</h2>
+        <div
+            style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; margin-bottom: 20px; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto;">
+            <div style="flex:1; text-align:center;">
+                <h2 style="text-align:center">Crime Type Distribution (Top 10)</h2>
+                <canvas id="crimeTypeChart" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+            </div>
+            <div style="flex:1; text-align:center;">
+                <h2 style="text-align:center">Crime Description Distribution (Top 10)</h2>
+                <canvas id="crimeDescPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+            </div>
+        </div>
+        <div>
+            <h2 style="text-align:center">Monthly Crime Count</h2>
+            <canvas id="crimeMonthChart" width="600" height="350"></canvas>
+        </div>
+        <div>
+            <h2 style="text-align:center">Crime Count by Day of Week</h2>
+            <canvas id="crimeWeekdayChart" width="600" height="350"></canvas>
+        </div>
+        <div style="width: 100%; max-width: 1300px; margin: 40px auto 0;">
+            <h2 style="text-align:center; margin-bottom: 10px;">Location Description Distribution (Top 10)</h2>
+            <canvas id="locationDescPie" width="1200" height="1200" style="display:block; margin: 0 auto;"></canvas>
+        </div>
+        <div
+            style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; margin-bottom: 20px; width: 100%; max-width: 1400px; margin-left: auto; margin-right: auto;">
+            <div style="flex:1; text-align:center;">
+                <h2 style="text-align:center">Arrest Distribution</h2>
+                <canvas id="arrestPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+            </div>
+            <div style="flex:1; text-align:center;">
+                <h2 style="text-align:center">Domestic Violence Distribution</h2>
+                <canvas id="domesticPie" width="800" height="800" style="display:block; margin: 0 auto;"></canvas>
+            </div>
+        </div>
+        <div id="csv-error" style="color:red;"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    // Automatically load and merge four CSV files from public/data directory
+    const csvFiles = [
+        'data/Crimes_2023-2025_part1.csv',
+        'data/Crimes_2023-2025_part2.csv',
+        'data/Crimes_2023-2025_part3.csv',
+        'data/Crimes_2023-2025_part4.csv'
+    ];
+
+    function fetchAndParseCSV(file) {
+        return fetch(file)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load ' + file);
+                return response.text();
+            })
+            .then(csvText => {
+                return new Promise((resolve, reject) => {
+                    Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: function (results) {
+                            resolve(results.data);
+                        },
+                        error: function (err) {
+                            reject(new Error('CSV parsing failed: ' + err.message));
+                        }
+                    });
+                });
+            });
+    }
+
+    Promise.all(csvFiles.map(fetchAndParseCSV))
+        .then(resultsArr => {
+            // Merge all data
+            const allData = [].concat(...resultsArr);
+            visualizeCrimeType(allData);
+        })
+        .catch(err => {
+            document.getElementById('csv-error').textContent = err.message;
+        });
+
+    // Merge multiple CSV files in sequence
+
+
+    function visualizeCrimeType(data) {
+        // Crime type distribution (pie chart)
+        const keys = Object.keys(data[0] || {});
+        let typeKey = keys.find(k => /type/i.test(k));
+        if (!typeKey) {
+            document.getElementById('csv-error').textContent = 'Crime type field (e.g. CrimeType) not found';
+            return;
+        }
+        const typeCount = {};
+        data.forEach(row => {
+            const type = row[typeKey] || 'Unknown';
+            typeCount[type] = (typeCount[type] || 0) + 1;
+        });
+        // Sort: descending, take top 10, merge others as Other
+        const sortedTypeArr = Object.entries(typeCount).sort((a, b) => b[1] - a[1]);
+        const topN = 10;
+        const topLabels = sortedTypeArr.slice(0, topN).map(item => item[0]);
+        const topValues = sortedTypeArr.slice(0, topN).map(item => item[1]);
+        const otherSum = sortedTypeArr.slice(topN).reduce((sum, item) => sum + item[1], 0);
+        if (otherSum > 0) {
+            topLabels.push('Other');
+            topValues.push(otherSum);
+        }
+        const ctx = document.getElementById('crimeTypeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: topLabels,
+                datasets: [{
+                    label: 'Crime Count',
+                    data: topValues,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                        '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Crime Type Distribution (Top 10)' }
+                }
+            }
+        });
+        // Monthly crime count
+        visualizeCrimeMonth(data);
+        visualizeCrimeWeekday(data);
+        // Crime count by day of week (bar chart)
+        function visualizeCrimeWeekday(data) {
+            // Find date field
+            const keys = Object.keys(data[0] || {});
+            let dateKey = keys.find(k => /date|日期/i.test(k));
+            if (!dateKey) {
+                document.getElementById('csv-error').textContent += '\nDate field (e.g. Date) not found';
+                return;
+            }
+            // Count crimes for each day of week
+            const weekdayCount = [0, 0, 0, 0, 0, 0, 0]; // 0=Sunday, 1=Monday, ...
+            data.forEach(row => {
+                const dateStr = row[dateKey];
+                if (!dateStr) return;
+                // Compatible with format like 09/24/2025 12:00:00 AM
+                let m = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+                if (m) {
+                    // JS: month 0-11, day 1-31
+                    const mm = parseInt(m[1], 10) - 1;
+                    const dd = parseInt(m[2], 10);
+                    const yyyy = parseInt(m[3], 10);
+                    const d = new Date(yyyy, mm, dd);
+                    const wd = d.getDay();
+                    weekdayCount[wd]++;
+                }
+            });
+            const weekdayLabels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const ctx = document.getElementById('crimeWeekdayChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: weekdayLabels,
+                    datasets: [{
+                        label: 'Crime Count',
+                        data: weekdayCount,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Crime Count by Day of Week' }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Day of Week' } },
+                        y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+        // Crime description distribution
+        visualizeCrimeDescriptionPie(data);
+        // Location description distribution
+        visualizeLocationDescriptionPie(data);
+        // Arrest distribution
+        visualizeArrestPie(data);
+        function visualizeArrestPie(data) {
+            // Find Arrest field
+            const keys = Object.keys(data[0] || {});
+            let arrestKey = keys.find(k => /arrest/i.test(k));
+            if (!arrestKey) {
+                document.getElementById('csv-error').textContent += '\nArrest field not found';
+                return;
+            }
+            let arrestCount = { 'Arrested': 0, 'Not Arrested': 0 };
+            data.forEach(row => {
+                if (String(row[arrestKey]).toLowerCase() === 'true') {
+                    arrestCount['Arrested']++;
+                } else {
+                    arrestCount['Not Arrested']++;
+                }
+            });
+            const ctx = document.getElementById('arrestPie').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Arrested', 'Not Arrested'],
+                    datasets: [{
+                        label: 'Count',
+                        data: [arrestCount['Arrested'], arrestCount['Not Arrested']],
+                        backgroundColor: ['#36A2EB', '#FF6384']
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: { display: true, position: 'right' },
+                        title: { display: true, text: 'Arrest Distribution' }
+                    }
+                }
+            });
+        }
+        function visualizeLocationDescriptionPie(data) {
+            // Find Location Description field
+            const keys = Object.keys(data[0] || {});
+            let locKey = keys.find(k => /location description/i.test(k));
+            if (!locKey) {
+                document.getElementById('csv-error').textContent += '\nLocation Description field not found';
+                return;
+            }
+            const locCount = {};
+            data.forEach(row => {
+                const loc = row[locKey] || 'Unknown';
+                locCount[loc] = (locCount[loc] || 0) + 1;
+            });
+            // Sort: descending, take top 10, merge others as Other
+            const sortedLocArr = Object.entries(locCount).sort((a, b) => b[1] - a[1]);
+            const topN = 10;
+            const topLabels = sortedLocArr.slice(0, topN).map(item => item[0]);
+            const topValues = sortedLocArr.slice(0, topN).map(item => item[1]);
+            const otherSum = sortedLocArr.slice(topN).reduce((sum, item) => sum + item[1], 0);
+            if (otherSum > 0) {
+                topLabels.push('Other');
+                topValues.push(otherSum);
+            }
+            const ctx = document.getElementById('locationDescPie').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: topLabels,
+                    datasets: [{
+                        label: 'Crime Count',
+                        data: topValues,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                            '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: { display: true, position: 'right' },
+                        title: { display: true, text: 'Location Description Distribution (Top 10)' }
+                    }
+                }
+            });
+        }
+        // Domestic violence distribution
+        visualizeDomesticPie(data);
+    }
+
+    function visualizeDomesticPie(data) {
+        // Find domestic violence field
+        const keys = Object.keys(data[0] || {});
+        let domKey = keys.find(k => /domestic/i.test(k));
+        if (!domKey) {
+            document.getElementById('csv-error').textContent += '\nDomestic violence field (e.g. Domestic) not found';
+            return;
+        }
+        let domCount = { 'Domestic Violence': 0, 'Non-Domestic Violence': 0 };
+        data.forEach(row => {
+            const val = String(row[domKey]).toLowerCase();
+            if (val === 'true' || val === '1' || val === 'y' || val === 'yes') {
+                domCount['Domestic Violence']++;
+            } else {
+                domCount['Non-Domestic Violence']++;
+            }
+        });
+        const ctx = document.getElementById('domesticPie').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Domestic Violence', 'Non-Domestic Violence'],
+                datasets: [{
+                    label: 'Count',
+                    data: [domCount['Domestic Violence'], domCount['Non-Domestic Violence']],
+                    backgroundColor: ['#FF6384', '#36A2EB']
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Domestic Violence Distribution' }
+                }
+            }
+        });
+    }
+
+    function visualizeCrimeDescriptionPie(data) {
+        // Find Description field
+        const keys = Object.keys(data[0] || {});
+        let descKey = keys.find(k => /description/i.test(k));
+        if (!descKey) {
+            document.getElementById('csv-error').textContent += '\nDescription field not found';
+            return;
+        }
+        const descCount = {};
+        data.forEach(row => {
+            const desc = row[descKey] || 'Unknown';
+            descCount[desc] = (descCount[desc] || 0) + 1;
+        });
+        // Sort: descending, take top 10, merge others as Other
+        const sortedDescArr = Object.entries(descCount).sort((a, b) => b[1] - a[1]);
+        const topN = 10;
+        const topLabels = sortedDescArr.slice(0, topN).map(item => item[0]);
+        const topValues = sortedDescArr.slice(0, topN).map(item => item[1]);
+        const otherSum = sortedDescArr.slice(topN).reduce((sum, item) => sum + item[1], 0);
+        if (otherSum > 0) {
+            topLabels.push('Other');
+            topValues.push(otherSum);
+        }
+        const ctx = document.getElementById('crimeDescPie').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: topLabels,
+                datasets: [{
+                    label: 'Crime Count',
+                    data: topValues,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                        '#FF9F40', '#C9CBCF', '#FF6384AA', '#36A2EBAA', '#FFCE56AA', '#AAAAAA'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: 'right' },
+                    title: { display: true, text: 'Crime Description Distribution (Top 10)' }
+                }
+            }
+        });
+    }
+
+    function visualizeCrimeMonth(data) {
+        // Find date field
+        const keys = Object.keys(data[0] || {});
+        let dateKey = keys.find(k => /date/i.test(k));
+        if (!dateKey) {
+            document.getElementById('csv-error').textContent += '\nDate field (e.g. Date) not found';
+            return;
+        }
+        // Count crimes for each month (1-12) for all years
+        const monthCount = Array(12).fill(0); // 0=Jan, 11=Dec
+        data.forEach(row => {
+            const dateStr = row[dateKey];
+            if (!dateStr) return;
+            // Compatible with format like 09/24/2025 12:00:00 AM
+            let m = dateStr.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+            if (m) {
+                const mm = parseInt(m[1], 10); // month 1-12
+                if (mm >= 1 && mm <= 12) {
+                    monthCount[mm - 1]++;
+                }
+            }
+        });
+        const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const ctx = document.getElementById('crimeMonthChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Crime Count',
+                    data: monthCount,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Monthly Crime Count (All Years)' }
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Month (1-12)' } },
+                    y: { title: { display: true, text: 'Count' }, beginAtZero: true }
+                }
+            }
+        });
+    }
+</script>
+
+</html>
+</div>
+</body>
+
+</html>
