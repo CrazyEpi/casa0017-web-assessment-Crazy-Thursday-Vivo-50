@@ -1,4 +1,4 @@
-This is the GitHub README file generated in **English** and **Markdown** format, based on your uploaded web content and report.
+好的，我已经将您提供的截图信息集成到英文 Markdown README 文件中。截图将被描述为占位符 (\`\`)，以提供视觉上的参考。
 
 -----
 
@@ -22,13 +22,24 @@ The platform consists of two main sections: **Home** (Map) and **Data** (Statist
 The Home page features a dynamic map centered on Chicago (`[41.8781, -87.6298]`) for spatial crime visualization.
 
   * **Map Visualization Modes:**
+
       * **Marker Cluster View:** Uses `leaflet.markercluster` to group nearby crime incidents into clusters, providing an uncluttered overview of density at different zoom levels.
       * **Heatmap View:** Utilizes `leaflet.heat` to show a continuous intensity surface, clearly highlighting crime hot spots across the city.
+
+    > 
+
   * **Data Filtering and Control:**
+
       * **Real-time Filtering:** Users can filter the displayed crime data on the map by **Crime Type (Category)** and **Date Range (From / To dates)**.
+
   * **ZIP Code Search:**
+
       * A search box in the navigation bar allows users to input a ZIP code to automatically pan the map to the location and place a marker.
+
+    > 
+
   * **Crime News Section:**
+
       * A list of selected Chicago crime-related news articles is displayed below the map (currently static content).
 
 ### 📊 Data Page - Statistical Analysis
@@ -36,8 +47,15 @@ The Home page features a dynamic map centered on Chicago (`[41.8781, -87.6298]`)
 The Data page provides analytical charts using Chart.js to help users understand crime patterns.
 
   * **Time Trend Analysis:** Visualizes crime counts by **Month** and **Day of the Week** to identify temporal patterns.
+
+    > 
+
   * **Crime Type Distribution:** Displays the **Top 10** most frequent crime types, aggregating the rest into an "Other" category for clarity.
+
   * **Binary Outcome Analysis:** Presents the proportion of crimes resulting in **Arrest** (typically low, under 15%) and the distribution of **Domestic Incidents** (approx. 15%-20% of total crimes).
+
+    > 
+
   * **Filter Consistency:** All statistical charts are dynamically updated based on the date and category filters applied on the Home page, ensuring data view continuity.
 
 ## ⚙️ Technology Stack
@@ -61,3 +79,7 @@ This project was completed as the Final Report for the CASA0017 Web Architecture
   * Hu Haoyu (25037784)
   * He Jiahua (25086119)
   * Wang Ziyi (25044289)
+
+-----
+
+Would you like me to make any other adjustments to the README file?
