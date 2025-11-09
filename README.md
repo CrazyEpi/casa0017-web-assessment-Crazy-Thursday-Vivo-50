@@ -1,28 +1,63 @@
-# CASA0017 Web Assessment ReadMe File
+This is the GitHub README file generated in **English** and **Markdown** format, based on your uploaded web content and report.
 
-# DELETE THE LAST LINE AND REPLACE THIS LINE WITH YOUR WEBSITE NAME 
+-----
 
-This is the Final assessment template for CASA0017 - Please use this template and edit the relevant sections to personalise.
-This section has a short introduction to what the website is about and what research problem the site is solving.  Remeber this file showcases your website source code so use it to sell what you can do as a group or showcase in a future portfolio. 
+# 🏙️ Chicago Crime Data Visualization Platform
 
-## Use this README File 
+[](https://github.com/CrazyEpi/casa0017-web-assessment-Crazy-Thursday-Vivo-50)
 
-Use this section to show us what your Website is about.   Include a Screenshot to the Website in this README file, link to the various frameworks you've used.  If you want to show off your website you can add a Gif of you interacting with your site.   Emojis are also fun to include as well 😄
+> This project designs and implements a Web platform to visually display recent Chicago crime statistics, including crime type, time trends, and spatial distribution, using an interactive map and statistical charts. The goal is to enhance public awareness of urban safety and risk.
 
-Look at some other Websites online in GitHub and see how they use the README File to showcase thier site.  Good examples are:
+## 🔗 Project Links
 
-- https://github.com/smaranjitghose/awesome-portfolio-websites
-- https://github.com/gohugoio/hugo    
-- https://github.com/academicpages/academicpages.github.io
+  * **GitHub Repository:** `https://github.com/CrazyEpi/casa0017-web-assessment-Crazy-Thursday-Vivo-50`
+  * **Website Demo (Internal IP):** `10.129.111.11:3000`
 
-##  Replace the Tags on the side menu of GitHub
+## ✨ Key Features
 
-Put some tags in to make your site more searchable in GitHub
+The platform consists of two main sections: **Home** (Map) and **Data** (Statistics).
 
-## Include A Section That Tells Developers How To Install The App
+### 📍 Home Page - Interactive Crime Map
 
-Include a section that gives intructions on how to install the app or run it in Docker.  What versions of the plugins are you assuming?  Maybe define a licence as well, this is good practise.
+The Home page features a dynamic map centered on Chicago (`[41.8781, -87.6298]`) for spatial crime visualization.
 
-##  Contact Details
+  * **Map Visualization Modes:**
+      * **Marker Cluster View:** Uses `leaflet.markercluster` to group nearby crime incidents into clusters, providing an uncluttered overview of density at different zoom levels.
+      * **Heatmap View:** Utilizes `leaflet.heat` to show a continuous intensity surface, clearly highlighting crime hot spots across the city.
+  * **Data Filtering and Control:**
+      * **Real-time Filtering:** Users can filter the displayed crime data on the map by **Crime Type (Category)** and **Date Range (From / To dates)**.
+  * **ZIP Code Search:**
+      * A search box in the navigation bar allows users to input a ZIP code to automatically pan the map to the location and place a marker.
+  * **Crime News Section:**
+      * A list of selected Chicago crime-related news articles is displayed below the map (currently static content).
 
-Having Contact Details is also good as it shows people how to get in contact with you if they'd like to contribute to the app. 
+### 📊 Data Page - Statistical Analysis
+
+The Data page provides analytical charts using Chart.js to help users understand crime patterns.
+
+  * **Time Trend Analysis:** Visualizes crime counts by **Month** and **Day of the Week** to identify temporal patterns.
+  * **Crime Type Distribution:** Displays the **Top 10** most frequent crime types, aggregating the rest into an "Other" category for clarity.
+  * **Binary Outcome Analysis:** Presents the proportion of crimes resulting in **Arrest** (typically low, under 15%) and the distribution of **Domestic Incidents** (approx. 15%-20% of total crimes).
+  * **Filter Consistency:** All statistical charts are dynamically updated based on the date and category filters applied on the Home page, ensuring data view continuity.
+
+## ⚙️ Technology Stack
+
+| Area | Technology/Tool | Description |
+| :--- | :--- | :--- |
+| **Frontend** | HTML, CSS, JavaScript | Structure, style, and client-side logic. |
+| **Mapping** | Leaflet.js, OpenStreetMap | Core interactive map library and base map tiles. |
+| **Mapping Plugins** | `leaflet.markercluster`, `leaflet.heat` | Implementations for point aggregation and hot spot visualization. |
+| **Charting** | Chart.js | Library for rendering statistical bar and pie charts on the Data page. |
+| **Backend** | Node.js (Express) | Lightweight server for handling API requests and serving static files. |
+| **Database** | SQLite3 (`better-sqlite3`) | Stores over 170,000 crime records (e.g., from 2025 data). |
+| **Optimization** | Database Indexing | Indexes on Lat/Lng, Primary Type, and Date fields for query efficiency. |
+| **Deployment** | Raspberry Pi | The website is hosted and run on a Raspberry Pi device. |
+
+## 👥 Group Members
+
+This project was completed as the Final Report for the CASA0017 Web Architecture course.
+
+  * Wu Yitong (25041013)
+  * Hu Haoyu (25037784)
+  * He Jiahua (25086119)
+  * Wang Ziyi (25044289)
