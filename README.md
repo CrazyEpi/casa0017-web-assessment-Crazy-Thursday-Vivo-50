@@ -13,11 +13,11 @@
 
 **Introductory modal on first load**
 
-![Intro modal](./screenshots/intro-modal.png)
+![Intro modal](./screenshots/intro-modal.jpg)
 
 **Home page: clustered crime map**
 
-![Home map](./screenshots/home-map.png)
+![Home map](./screenshots/home-map.jpg)
 
 **Home page: Chicago crime news list**
 
@@ -25,7 +25,7 @@
 
 **Data page: overview of charts**
 
-![Data page](./screenshots/data-page.png)
+![Data page](./screenshots/data-page.jpg)
 
 **Example chart: monthly crime count**
 
